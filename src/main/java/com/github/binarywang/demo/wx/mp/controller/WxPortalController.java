@@ -71,23 +71,23 @@ public class WxPortalController {
         if (encType == null) {
             // 明文传输的消息
             WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(requestBody);
-            //WxMpXmlOutMessage outMessage = this.route(inMessage);
+            WxMpXmlOutMessage outMessage = this.route(inMessage);
             if (inMessage != null) {
-                // out = outMessage.toXml();
-                returnMsg = TulingApiUtil.getTulingResult(inMessage.getContent());
+                out = outMessage.toXml();
+                //returnMsg = TulingApiUtil.getTulingResult(inMessage.getContent());
             }
         } else if ("aes".equalsIgnoreCase(encType)) {
             // aes加密的消息
             WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(requestBody, wxService.getWxMpConfigStorage(),
                 timestamp, nonce, msgSignature);
             log.info("\n消息解密后内容为：\n{} ", inMessage.toString());
-            // WxMpXmlOutMessage outMessage = this.route(inMessage);
+             WxMpXmlOutMessage outMessage = this.route(inMessage);
             if (inMessage != null) {
-                //   out = outMessage.toEncryptedXml(wxService.getWxMpConfigStorage());
-                returnMsg = TulingApiUtil.getTulingResult(inMessage.getContent());
+                   out = outMessage.toEncryptedXml(wxService.getWxMpConfigStorage());
+               // returnMsg = TulingApiUtil.getTulingResult(inMessage.getContent());
             }
         }
-        return returnMsg;
+        return out;
     }
 
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {
@@ -96,7 +96,6 @@ public class WxPortalController {
         } catch (Exception e) {
             log.error("路由消息时出现异常！", e);
         }
-
         return null;
     }
 

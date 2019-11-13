@@ -30,7 +30,7 @@ public class MsgHandler extends AbstractHandler {
         }
 
         //当用户输入关键词如“你好”，“客服”等，并且有客服在线时，把消息转发给在线客服
-        try {
+    /*    try {
             if (StringUtils.startsWithAny(wxMessage.getContent(), "你好", "客服")
                 && weixinService.getKefuService().kfOnlineList()
                 .getKfOnlineList().size() > 0) {
@@ -40,10 +40,10 @@ public class MsgHandler extends AbstractHandler {
             }
         } catch (WxErrorException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //TODO 组装回复消息
-        String content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
+        String content = "收到信息内容：" + wxMessage.getContent();
 
         return new TextBuilder().build(content, wxMessage, weixinService);
 
