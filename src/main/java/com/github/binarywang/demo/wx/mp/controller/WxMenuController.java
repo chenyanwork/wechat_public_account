@@ -45,24 +45,16 @@ public class WxMenuController {
     @GetMapping("/create")
     public String menuCreateSample(@PathVariable String appid) throws WxErrorException, MalformedURLException {
         WxMenu menu = new WxMenu();
-        WxMenuButton button1 = new WxMenuButton();
-        button1.setType(MenuButtonType.CLICK);
-        button1.setName("今日歌曲");
-        button1.setKey("V1001_TODAY_MUSIC");
 
-//        WxMenuButton button2 = new WxMenuButton();
-//        button2.setType(WxConsts.BUTTON_MINIPROGRAM);
-//        button2.setName("小程序");
-//        button2.setAppId("wx286b93c14bbf93aa");
-//        button2.setPagePath("pages/lunar/index.html");
-//        button2.setUrl("http://mp.weixin.qq.com");
+
+
+        WxMenuButton buttonOne = new WxMenuButton();
+        buttonOne.setType(MenuButtonType.VIEW);
+        buttonOne.setName("用户注册");
+        buttonOne.setUrl("http://tdmkw6.natappfree.cc/faultplatform/wxLogin");
 
         WxMenuButton button3 = new WxMenuButton();
-        button3.setName("菜单");
-
-        menu.getButtons().add(button1);
-//        menu.getButtons().add(button2);
-        menu.getButtons().add(button3);
+        button3.setName("功能");
 
         WxMenuButton button31 = new WxMenuButton();
         button31.setType(MenuButtonType.VIEW);
@@ -79,7 +71,7 @@ public class WxMenuController {
         button33.setName("赞一下我们");
         button33.setKey("V1001_GOOD");
 
-       /* WxMenuButton button34 = new WxMenuButton();
+        WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
         button34.setName("获取用户信息");
 
@@ -89,15 +81,25 @@ public class WxMenuController {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             URL requestURL = new URL(request.getRequestURL().toString());
             String url = this.wxService.switchoverTo(appid).oauth2buildAuthorizationUrl(
-                String.format("%s://%s/wx/redirect/%s/greet", requestURL.getProtocol(), requestURL.getHost(), appid),
-                WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
+                String.format("%s://%s/faultplatform/wx/redirect/%s/greet", requestURL.getProtocol(), requestURL.getHost(), appid),
+                WxConsts.OAuth2Scope.SNSAPI_BASE, null);
             button34.setUrl(url);
-        }*/
+        }
 
         button3.getSubButtons().add(button31);
         button3.getSubButtons().add(button32);
         button3.getSubButtons().add(button33);
-        //button3.getSubButtons().add(button34);
+        button3.getSubButtons().add(button34);
+
+
+        WxMenuButton buttonThree = new WxMenuButton();
+        buttonThree.setType(MenuButtonType.CLICK);
+        buttonThree.setName("关于我们");
+        buttonThree.setKey("aboutme");
+
+        menu.getButtons().add(buttonOne);
+        menu.getButtons().add(button3);
+        menu.getButtons().add(buttonThree);
 
         this.wxService.switchover(appid);
         return this.wxService.getMenuService().menuCreate(menu);

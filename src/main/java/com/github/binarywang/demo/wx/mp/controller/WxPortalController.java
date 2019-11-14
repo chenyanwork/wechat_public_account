@@ -1,6 +1,5 @@
 package com.github.binarywang.demo.wx.mp.controller;
 
-import com.github.binarywang.demo.wx.mp.utils.TulingApiUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
